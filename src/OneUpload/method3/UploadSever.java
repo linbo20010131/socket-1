@@ -22,7 +22,7 @@ import java.net.Socket;
 public class UploadSever {
 	public static void main(String[] args) {
 		UploadSever server = new UploadSever();
-		File file = new File("H:\\zlj\\linux\\s");// 创建一个File对象
+		File file = new File("F:\\");// 创建一个File对象
 		server.UploadWriter(file);
 	}
 
@@ -41,6 +41,7 @@ public class UploadSever {
 			serverSocket = new ServerSocket(25520);
 			socket = new Socket(); 
 			socket = serverSocket.accept();
+			System.out.println(socket.hashCode());
 
 			
 			

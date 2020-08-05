@@ -14,10 +14,8 @@ public class ClientThread extends Thread{
     private int port =0;
     private File file;
 
-    public ClientThread(Socket socket,String ip,int port,File file) {
+    public ClientThread(Socket socket,File file) {
         this.socket = socket;
-        this.ip=ip;
-        this.port=port;
         this.file=file;
     }
 
@@ -26,7 +24,6 @@ public class ClientThread extends Thread{
 
         try {
             //包头，协议头
-            socket = new Socket(ip, port);// 创建客户端Socket,指定服务器地址和端口,端口必须和服务端一致
             dataInput = new DataInputStream(new BufferedInputStream(new FileInputStream(file)));
             dataOutput = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));// 由Socket对象得到输入流,并构造相应的DataOutputStream对象
 
@@ -72,6 +69,9 @@ public class ClientThread extends Thread{
                 }
                 if (null != dataInput) {
                     dataInput.close();
+                }
+                if (null != socket) {
+                    socket.close();
                 }
             } catch (Exception e2) {
                 e2.printStackTrace();

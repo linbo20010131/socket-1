@@ -16,7 +16,7 @@ import java.net.Socket;
 public class UploadClient {
 	public static void main(String[] args) {
 		UploadClient client = new UploadClient();
-		String filePath = "H:\\zlj\\linux\\CMS.rar";// 要读取的文件路径
+		String filePath = "F:\\linux\\linuxIso\\CentOS-6.8-x86_64-bin-DVD1.iso";// 要读取的文件路径
 		client.uploadRead(filePath);
 	}
 
@@ -29,7 +29,8 @@ public class UploadClient {
 	 */
 	public void uploadRead(String filePath) {
 		try {
-			Socket socket = new Socket("192.168.1.110", 25520);// 创建客户端Socket,指定服务器地址和端口,端口必须和服务端一致
+			Socket socket = new Socket("192.168.1.55", 25520);// 创建客户端Socket,指定服务器地址和端口,端口必须和服务端一致
+			System.out.println(socket.hashCode());
 			InputStream in = new FileInputStream(filePath);// 构建一个输出流
 			DataInputStream dataInputStream = new DataInputStream(new FileInputStream(filePath));// 转换成缓冲流,将读取的数据放在一个缓冲区
 			

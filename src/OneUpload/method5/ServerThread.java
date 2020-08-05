@@ -135,6 +135,10 @@ public class ServerThread extends Thread {
                 if (null != dataInput) {
                     dataInput.close();
                 }
+                if (null != socket){
+                    socket.close();
+                }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

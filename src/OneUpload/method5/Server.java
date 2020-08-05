@@ -36,13 +36,14 @@ public class Server {
 			while (true) {
 				socket = serverSocket.accept();// 监听客户端
 				System.out.println("\n客户端" + socket.getInetAddress() + "已连接\n");
+				System.out.println(Thread.activeCount());
+				System.out.println(socket.hashCode());
 				new ServerThread(socket,filePath).start();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}finally {
 			try {
-				socket.close();
 				serverSocket.close();
 			} catch (IOException e) {
 				e.printStackTrace();
