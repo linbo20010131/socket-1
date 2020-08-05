@@ -17,7 +17,7 @@ import java.net.Socket;
 public class UploadClient {
 	public static void main(String[] args) {
 		UploadClient client = new UploadClient();
-		String filePath = "H:\\zlj\\linux\\linx命令.txt";// 要读取的文件路径
+		String filePath = "F:\\技术\\平萝莉.txt";// 要读取的文件路径
 		client.uploadRead(filePath);
 	}
 
@@ -30,7 +30,7 @@ public class UploadClient {
 	 */
 	public void uploadRead(String filePath) {
 		try {
-			Socket socket = new Socket("192.168.1.110", 25520);// 创建客户端Socket,指定服务器地址和端口,端口必须和服务端一致
+			Socket socket = new Socket("192.168.1.55", 25520);// 创建客户端Socket,指定服务器地址和端口,端口必须和服务端一致
 			InputStream in = new FileInputStream(filePath);// 构建一个输出流
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in));// 转换成缓冲流,将读取的数据放在一个缓冲区
 			// 由Socket对象得到输入流,并构造相应的BufferedReader对象

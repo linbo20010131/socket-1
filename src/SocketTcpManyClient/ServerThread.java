@@ -22,7 +22,7 @@ public class ServerThread extends Thread {
 			while (true) {
 				br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				String mass = br.readLine();
-				System.out.println(">>Client:" + mass + "\n");
+				System.out.println(">>Client1:" + mass + "\n");
 
 				bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 				bw.write(mass + "==================");

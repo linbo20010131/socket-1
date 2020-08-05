@@ -1,11 +1,6 @@
-package OneUpload.method4;
+package OneUpload.method5;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.*;
 import java.net.Socket;
 
 /**
@@ -15,9 +10,9 @@ import java.net.Socket;
  * 
  * @data 2017Äê8ÔÂ23ÈÕ
  */
-public class Client {
+public class Client2 {
 	public static void main(String[] args) {
-		Client client1 = new Client();
+		Client2 client1 = new Client2();
 		File file = new File("F:\\linux\\linuxIso\\CentOS-6.8-x86_64-bin-DVD1.iso");
 		client1.upload(file);
 	}

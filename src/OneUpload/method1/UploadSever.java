@@ -20,7 +20,7 @@ import java.net.Socket;
 public class UploadSever {
 	public static void main(String[] args) {
 		UploadSever server = new UploadSever();
-		File file = new File("H:\\zlj\\linux\\linx命令1.txt");// 创建一个File对象
+		File file = new File("F:\\技术\\Lolita.txt");// 创建一个File对象
 		server.UploadWriter(file);
 	}
 

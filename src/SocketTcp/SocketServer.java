@@ -33,7 +33,7 @@ public class SocketServer {
 				
 				
 				bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-				bw.write("服务端返回的消息："+mass );
+				bw.write(mass);
 				bw.newLine();
 				bw.flush();
 			}

@@ -18,7 +18,7 @@ import java.net.Socket;
 public class Server {
 	public static void main(String[] args) {
 		Server server = new Server();
-		String filePath = "H:\\zlj\\linux\\s\\";
+		String filePath = "F:\\";
 		int port = 25420;// 定义一个端口,和客户端保持一致
 		server.upload(filePath, port);
 
@@ -27,7 +27,7 @@ public class Server {
 	/**
 	 * 服务端文件读取下载(写入)
 	 * 
-	 * @param path
+	 * @param filePath
 	 *            路径
 	 * @param port
 	 *            端口
@@ -42,6 +42,7 @@ public class Server {
 			serverSocket = new ServerSocket(port);// 构建一个Serversocket
 			socket = serverSocket.accept();// 监听客户端
 			System.out.println("客户端" + socket.getInetAddress() + "已连接");
+
 			dataInput = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
 
 			/**
@@ -74,8 +75,19 @@ public class Server {
 			 */
 			int fileTypeLength = dataInput.readInt();// 得到文件类型的长度
 			byte type[] = new byte[fileTypeLength];// 转换成byte数组
-			dataInput.read(type);// 读取btye数组
-			String fileType = new String(type);// 将byte数组转换成String 得到文件类型
+
+			int typelength = 0;
+			String fileType = null;
+			while (true){
+				typelength += dataInput.read(type);
+				if(fileTypeLength == typelength){
+					break;
+				}
+			}
+			fileType = new String(type);// 将byte数组转换成String 得到文件类型
+
+
+
 
 			/**
 			 * 得到文件内容的长度
@@ -86,9 +98,18 @@ public class Server {
 			 * 得到上传者
 			 */
 			int uploaderNameLength = dataInput.readInt();// 得到上传者的的长度
+
+			String uploader = null;
+			int uploaderLength = 0;
 			byte uploaderName[] = new byte[uploaderNameLength];// 转为byte数组
-			dataInput.read(uploaderName);// 读取byte数组
-			String uploader = new String(uploaderName);// 转为String得到上传的name
+
+			while (true){
+				uploaderLength += dataInput.read(uploaderName);
+				if(uploaderLength == uploaderNameLength){
+					break;
+				}
+			}
+			 uploader = new String(uploaderName);// 转为String得到上传的name
 
 			/**
 			 * 取得下载之后要存放的路径
@@ -108,7 +129,7 @@ public class Server {
 			int len = 0;
 
 			double schedule = 0;
-			//double oldSchedule = 0;
+			double oldSchedule = 0;
 			long startTime = System.currentTimeMillis(); // 下载开始时间
 			System.out.print("文件下载了:[");
 			while (true) {
@@ -118,15 +139,15 @@ public class Server {
 				len = dataInput.read(byt);
 				sumLength += len;
 				dataOutput.write(byt, 0, len);
-				schedule = (sumLength / (double) longLength * 100);// 计算进度,进度等于文件的长度除以客户端写过来的长度*100取整
-				System.out.println(schedule + "%");
-				/*if (schedule > oldSchedule) {// 只要下载进度大于之前的进度
+				schedule = Math.round(sumLength / (double) longLength * 100);// 计算进度,进度等于文件的长度除以客户端写过来的长度*100取整
+
+				if (schedule > oldSchedule) {// 只要下载进度大于之前的进度
 					oldSchedule = schedule;// 将当前进度赋给之前的进度
 					System.out.print("#");
-				}*/
+				}
 				dataOutput.flush();
 			}
-			//System.out.println("]" + oldSchedule + "%");
+			System.out.println("]" + oldSchedule + "%");
 			System.out.println("写入成功");
 			long endTime = System.currentTimeMillis();// 下载结束时间
 			long time = (endTime - startTime) / 1000;// 总耗时
