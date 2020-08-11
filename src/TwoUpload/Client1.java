@@ -2,6 +2,7 @@ package TwoUpload;
 
 import java.io.File;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,7 +20,7 @@ public class Client1 {
 
         File file1 = new File("F:\\linux\\linuxIso\\ubuntu-18.04.2-desktop-amd64.iso");
 
-        Set<File> files = new HashSet<>();
+        List<File> files = new ArrayList<>();
         files.add(file);
         files.add(file1);
         Client1 client1 = new Client1();
@@ -36,7 +37,7 @@ public class Client1 {
      *
      * @param files нд╪Ч
      */
-    public void upload(Set<File> files, String ip, int port) {
+    public void upload(List<File> files, String ip, int port) {
         Socket socket = null;
 
         try {

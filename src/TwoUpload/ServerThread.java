@@ -5,7 +5,7 @@ import java.net.Socket;
 
 public class ServerThread extends Thread {
     private String filePath;
-    private Socket socket ;
+    private Socket socket;
     DataInputStream dataInput = null;
     DataOutputStream dataOutput = null;
 
@@ -19,16 +19,13 @@ public class ServerThread extends Thread {
 
         try {
 
+            dataInput = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+            int filesize = dataInput.readInt();
+            System.out.println(filesize);
+            for (int i = 0; i < filesize; i++) {
 
-            while (true) {
-
-                dataInput = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
                 //获取socket输入流
                 System.out.println(socket.hashCode());
-
-
-
-
 
 
                 /**
@@ -125,15 +122,18 @@ public class ServerThread extends Thread {
 
                     if (schedule > oldSchedule) {// 只要下载进度大于之前的进度
                         oldSchedule = schedule;// 将当前进度赋给之前的进度
-                        System.out.print("#");
+                        System.out.print("-");
                     }
                     dataOutput.flush();
+
                 }
                 System.out.println("]" + oldSchedule + "%\n");
                 System.out.println("写入成功");
                 long endTime = System.currentTimeMillis();// 下载结束时间
                 long time = (endTime - startTime) / 1000;// 总耗时
                 System.out.println("所用时间:" + time + "s");
+                //关闭dataOutput
+                dataOutput.close();
 
 
 
@@ -144,9 +144,6 @@ public class ServerThread extends Thread {
             e.printStackTrace();
         } finally {
             try {// 关闭连接
-                if (null != dataOutput) {
-                    dataOutput.close();
-                }
                 if (null != dataInput) {
                     dataInput.close();
                 }

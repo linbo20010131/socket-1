@@ -2,6 +2,7 @@ package TwoUpload;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.List;
 import java.util.Set;
 
 public class ClientThread extends Thread {
@@ -11,9 +12,9 @@ public class ClientThread extends Thread {
     DataOutputStream dataOutput = null;
     String uploaderName = "林波";
     private Socket socket = null;
-    private Set<File> files = null;
+    private List<File> files = null;
 
-    public ClientThread(Socket socket, Set<File> files) {
+    public ClientThread(Socket socket, List<File> files) {
         this.socket = socket;
         this.files = files;
     }
@@ -23,11 +24,17 @@ public class ClientThread extends Thread {
 
         try {
 
+
+            dataOutput = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));// 由Socket对象得到输入流,并构造相应的DataOutputStream对象
+            //发送文件个数
+            dataOutput.writeInt(files.size());
+            System.out.println(files.size());
+            dataOutput.flush();
+
             for (File file : files
             ) {
                 //包头，协议头
                 dataInput = new DataInputStream(new BufferedInputStream(new FileInputStream(file)));
-                dataOutput = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));// 由Socket对象得到输入流,并构造相应的DataOutputStream对象
 
 
                 String fileName = file.getName();// 得到文件名
@@ -53,6 +60,7 @@ public class ClientThread extends Thread {
                 System.out.print("文件内容长度:" + file.length() + " | ");
                 System.out.print("上传者:" + uploaderName + "]" + "\n");
 
+
                 byte[] byt = new byte[1024 * 1024 * 20];// new一个byte数组
                 int len = 0;
                 while ((len = dataInput.read(byt)) > 0) {// 只要文件内容的长度大于0,就一直读取
@@ -62,6 +70,7 @@ public class ClientThread extends Thread {
                 }
                 System.out.println("读取成功");// 读取成功
             }
+
 
         } catch (Exception e) {
             e.printStackTrace();

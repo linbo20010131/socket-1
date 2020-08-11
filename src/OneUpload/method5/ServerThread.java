@@ -17,23 +17,23 @@ public class ServerThread extends Thread {
     @Override
     public void run() {
         try {
-            //»ñÈ¡socketÊäÈëÁ÷
+            //è·å–socketè¾“å…¥æµ
             dataInput = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
 
             /**
-             * µÃµ½ÎÄ¼şÃû
+             * å¾—åˆ°æ–‡ä»¶å
              */
             int fileNameLength = 0;
             while (true) {
                 if (dataInput.available() >= 4) {
-                    fileNameLength = dataInput.readInt(); // µÃµ½¿Í»§¶ËĞ´¹ıÀ´µÄÎÄ¼ş³¤¶È,¡¡¡¡¡¡4¸ö×Ö½Ú
+                    fileNameLength = dataInput.readInt(); // å¾—åˆ°å®¢æˆ·ç«¯å†™è¿‡æ¥çš„æ–‡ä»¶é•¿åº¦,ã€€ã€€ã€€4ä¸ªå­—èŠ‚
                     break;
                 }
             }
-            byte name[] = new byte[fileNameLength]; // ×ª»»³ÉbyteÊı×é
+            byte name[] = new byte[fileNameLength]; // è½¬æ¢æˆbyteæ•°ç»„
             int nameLength = 0;
             String fileName = null;
-            while (true) {// Ö±µ½½«ÎÄ¼şÃûµÄ³¤¶ÈÈ«²¿¶ÁÈ¡Íê³É
+            while (true) {// ç›´åˆ°å°†æ–‡ä»¶åçš„é•¿åº¦å…¨éƒ¨è¯»å–å®Œæˆ
                 nameLength += dataInput.read(name);
                 if (fileNameLength == nameLength) {
                     break;
@@ -42,11 +42,11 @@ public class ServerThread extends Thread {
             fileName = new String(name);
 
             /**
-             * µÃµ½ÎÄ¼şÀàĞÍ
+             * å¾—åˆ°æ–‡ä»¶ç±»å‹
              */
-            int fileTypeLength = dataInput.readInt();// µÃµ½ÎÄ¼şÀàĞÍµÄ³¤¶È
+            int fileTypeLength = dataInput.readInt();// å¾—åˆ°æ–‡ä»¶ç±»å‹çš„é•¿åº¦
 
-            byte type[] = new byte[fileTypeLength];// ×ª»»³ÉbyteÊı×é
+            byte type[] = new byte[fileTypeLength];// è½¬æ¢æˆbyteæ•°ç»„
             int typelength = 0;
             String fileType = null;
             while (true) {
@@ -55,22 +55,22 @@ public class ServerThread extends Thread {
                     break;
                 }
             }
-            fileType = new String(type);// ½«byteÊı×é×ª»»³ÉString µÃµ½ÎÄ¼şÀàĞÍ
+            fileType = new String(type);// å°†byteæ•°ç»„è½¬æ¢æˆString å¾—åˆ°æ–‡ä»¶ç±»å‹
 
 
             /**
-             * µÃµ½ÎÄ¼şÄÚÈİµÄ³¤¶È
+             * å¾—åˆ°æ–‡ä»¶å†…å®¹çš„é•¿åº¦
              */
-            long longLength = dataInput.readLong();// µÃµ½¿Í»§¶ËĞ´¹ıÀ´µÄÎÄ¼şÄÚÈİ³¤¶È
+            long longLength = dataInput.readLong();// å¾—åˆ°å®¢æˆ·ç«¯å†™è¿‡æ¥çš„æ–‡ä»¶å†…å®¹é•¿åº¦
 
             /**
-             * µÃµ½ÉÏ´«Õß
+             * å¾—åˆ°ä¸Šä¼ è€…
              */
-            int uploaderNameLength = dataInput.readInt();// µÃµ½ÉÏ´«ÕßµÄµÄ³¤¶È
+            int uploaderNameLength = dataInput.readInt();// å¾—åˆ°ä¸Šä¼ è€…çš„çš„é•¿åº¦
 
             String uploader = null;
             int uploaderLength = 0;
-            byte uploaderName[] = new byte[uploaderNameLength];// ×ªÎªbyteÊı×é
+            byte uploaderName[] = new byte[uploaderNameLength];// è½¬ä¸ºbyteæ•°ç»„
 
             while (true) {
                 uploaderLength += dataInput.read(uploaderName);
@@ -78,56 +78,56 @@ public class ServerThread extends Thread {
                     break;
                 }
             }
-            uploader = new String(uploaderName);// ×ªÎªStringµÃµ½ÉÏ´«µÄname
+            uploader = new String(uploaderName);// è½¬ä¸ºStringå¾—åˆ°ä¸Šä¼ çš„name
 
 
             /**
-             * È¡µÃÏÂÔØÖ®ºóÒª´æ·ÅµÄÂ·¾¶
+             * å–å¾—ä¸‹è½½ä¹‹åè¦å­˜æ”¾çš„è·¯å¾„
              */
-            filePath += fileName;// µÃµ½(ÅÌ·û+ÎÄ¼şÃû )¾ø¶ÔÂ·¾¶
+            filePath += fileName;// å¾—åˆ°(ç›˜ç¬¦+æ–‡ä»¶å )ç»å¯¹è·¯å¾„
 
-            System.out.print("[ÎÄ¼şÃû:" + fileName + " | ");
-            System.out.print("ÎÄ¼şÃû³¤¶È:" + fileNameLength + " | ");
-            System.out.print("ÎÄ¼şÀàĞÍ:" + fileType + " | ");
-            System.out.print("ÎÄ¼şÄÚÈİ³¤¶È:" + longLength + " | ");
-            System.out.print("ÉÏ´«Õß:" + uploader + " | ");
-            System.out.println("´æ·ÅÂ·¾¶:" + filePath + "]" +"\n");
+            System.out.print("[æ–‡ä»¶å:" + fileName + " | ");
+            System.out.print("æ–‡ä»¶é•¿åº¦:" + fileNameLength + " | ");
+            System.out.print("æ–‡ä»¶ç±»å‹:" + fileType + " | ");
+            System.out.print("æ–‡ä»¶å†…å®¹é•¿åº¦:" + longLength + " | ");
+            System.out.print("ä¸Šä¼ è€…:" + uploader + " | ");
+            System.out.println("å­˜æ”¾è·¯å¾„:" + filePath + "]" +"\n");
 
 
             dataOutput = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(filePath)));
-            byte byt[] = new byte[1024 * 1024 * 20];// Ã¿´Î¶ÁÈ¡20M
+            byte byt[] = new byte[1024 * 1024 * 20];// æ¯æ¬¡è¯»å–20M
             long sumLength = 0;
             int len = 0;
 
             double schedule = 0;
             double oldSchedule = 0;
-            long startTime = System.currentTimeMillis(); // ÏÂÔØ¿ªÊ¼Ê±¼ä
-            System.out.print("ÎÄ¼şÏÂÔØÁË:[\n");
+            long startTime = System.currentTimeMillis(); // ä¸‹è½½å¼€å§‹æ—¶é—´
+            System.out.print("æ–‡ä»¶ä¸‹è½½ä¸­:[\n");
             while (true) {
-                if (longLength == sumLength) {// Èç¹û¿Í»§¶ËĞ´¹ıÀ´µÄÎÄ¼ş³¤¶ÈµÈÓÚÎÒÃÇÒª¶ÁÈ¡µÄÎÄ¼ş³¤¶È¾Í½áÊøÑ­»·
+                if (longLength == sumLength) {// å¦‚æœå®¢æˆ·ç«¯å†™è¿‡æ¥çš„æ–‡ä»¶é•¿åº¦ç­‰äºæˆ‘ä»¬è¦è¯»å–çš„æ–‡ä»¶é•¿åº¦å°±ç»“æŸå¾ªç¯
                     break;
                 }
                 len = dataInput.read(byt);
                 sumLength += len;
                 dataOutput.write(byt, 0, len);
-                schedule = Math.round(sumLength / (double) longLength * 100);// ¼ÆËã½ø¶È,½ø¶ÈµÈÓÚÎÄ¼şµÄ³¤¶È³ıÒÔ¿Í»§¶ËĞ´¹ıÀ´µÄ³¤¶È*100È¡Õû
+                schedule = Math.round(sumLength / (double) longLength * 100);// è®¡ç®—è¿›åº¦,è¿›åº¦ç­‰äºæ–‡ä»¶çš„é•¿åº¦é™¤ä»¥å®¢æˆ·ç«¯å†™è¿‡æ¥çš„é•¿åº¦*100å–æ•´
 
-                if (schedule > oldSchedule) {// Ö»ÒªÏÂÔØ½ø¶È´óÓÚÖ®Ç°µÄ½ø¶È
-                    oldSchedule = schedule;// ½«µ±Ç°½ø¶È¸³¸øÖ®Ç°µÄ½ø¶È
+                if (schedule > oldSchedule) {// åªè¦ä¸‹è½½è¿›åº¦å¤§äºä¹‹å‰çš„è¿›åº¦
+                    oldSchedule = schedule;// å°†å½“å‰è¿›åº¦èµ‹ç»™ä¹‹å‰çš„è¿›åº¦
                     System.out.print("#");
                 }
                 dataOutput.flush();
             }
             System.out.println("]" + oldSchedule + "%\n");
-            System.out.println("Ğ´Èë³É¹¦");
-            long endTime = System.currentTimeMillis();// ÏÂÔØ½áÊøÊ±¼ä
-            long time = (endTime - startTime) / 1000;// ×ÜºÄÊ±
-            System.out.println("ËùÓÃÊ±¼ä:" + time + "s");
+            System.out.println("ä¸‹è½½æˆåŠŸ");
+            long endTime = System.currentTimeMillis();// ä¸‹è½½ç»“æŸæ—¶é—´
+            long time = (endTime - startTime) / 1000;// æ€»è€—æ—¶
+            System.out.println("æ‰€ç”¨æ—¶é—´:" + time + "s");
 
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try {// ¹Ø±ÕÁ¬½Ó
+            try {// å…³é—­è¿æ¥
 
                 if (null != dataOutput) {
                     dataOutput.close();

@@ -24,7 +24,7 @@ public class UDPClient {
 			while (true) {
 				@SuppressWarnings("resource")
 				Scanner sc = new Scanner(System.in);
-				System.out.println("请输入要发送的内容");
+				System.out.println("杰杰");
 				String str = sc.nextLine();
 				sendBuff = str.getBytes();
 				DatagramPacket sendPacket = new DatagramPacket(sendBuff,
