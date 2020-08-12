@@ -7,7 +7,7 @@ public class Client {
     private static Socket socket;
     private static DataInputStream dataInput;
     private static DataOutputStream dataOutput;
-    public static String basePath = "F:\\apache-tomcat-8.0.48";
+    public static String basePath = "F:\\Program Files";
 
 
     public static void main(String[] args) throws Exception {
@@ -16,7 +16,7 @@ public class Client {
 
         SendFile(basePath);
        // SendFile("F:\\Download");
-        Thread.sleep(1000*60);
+        Thread.sleep(1000*600);
         System.out.println("·¢ËÍÍê³É");
 
     }

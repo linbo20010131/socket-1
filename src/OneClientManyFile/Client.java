@@ -7,7 +7,7 @@ public class Client {
     private static Socket socket;
     private static DataInputStream dataInput;
     private static DataOutputStream dataOutput;
-    private static  String basePath = "F:\\Download\\ͼƬ";
+    private static  String basePath = "F:\\Program Files";
 
 
     public static void main(String[] args) throws Exception {

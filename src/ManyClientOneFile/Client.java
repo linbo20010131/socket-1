@@ -10,7 +10,7 @@ public class Client {
     private static Socket socket;
     private static DataInputStream dataInput;
     private static DataOutputStream dataOutput;
-    private static String basePath = "F:\\Download\\ͼƬ";
+    private static String basePath = "F:\\aaa";
 
 
     public static void main(String[] args) throws Exception {
@@ -26,7 +26,7 @@ public class Client {
         while (true) {
             if (mark > 5) {
                 try {
-                    Thread.sleep(1000*2);
+                    Thread.sleep(10);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

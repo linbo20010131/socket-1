@@ -8,7 +8,7 @@ public class Client1 {
     private static Socket socket;
     private static DataInputStream dataInput;
     private static DataOutputStream dataOutput;
-    public static String basePath = "F:\\linux";
+    public static String basePath = "F:\\技术\\webService";
 
 
     public static void main(String[] args) throws Exception {
@@ -16,7 +16,7 @@ public class Client1 {
 
 
         SendFile(basePath);
-       Thread.sleep(1000*60);
+       Thread.sleep(1000*600);
         System.out.println("发送完成");
     }
 
